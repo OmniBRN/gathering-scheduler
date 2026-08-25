@@ -1,27 +1,35 @@
 package ro.tudorboureanu.gatheringschedule;
 
-import java.util.UUID;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/gathering")
 public class GatheringController {
-    @GetMapping("/{requestId}")
-    private ResponseEntity<Gathering> findById(@PathVariable String requestId) {
-        if(requestId.equals("e86294a0-ef5d-4afc-81e8-74ca97c94789"))
-        {
-            UUID gatheringId = UUID.fromString(requestId);
-            Gathering gathering = new Gathering(gatheringId, UUID.randomUUID(), "Temporary");
-            return ResponseEntity.ok(gathering);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+
+    private final GatheringService gatheringService;
+
+    public GatheringController(GatheringService gatheringService) {
+        this.gatheringService = gatheringService;
     }
 
-    
+    @GetMapping("/{requestId}")
+    private ResponseEntity<Gathering> findById(@PathVariable String requestId) {
+        return gatheringService.getGathering(requestId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/")
+    private ResponseEntity<Gathering> createGathering(@RequestBody String gatheringName){
+        Gathering newGathering = gatheringService.createGathering(gatheringName);
+        return ResponseEntity.ok(newGathering);
+    }
+
+
 }

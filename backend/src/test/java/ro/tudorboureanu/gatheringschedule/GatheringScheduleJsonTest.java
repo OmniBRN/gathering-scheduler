@@ -20,16 +20,13 @@ public class GatheringScheduleJsonTest {
     void gatheringSerializationTest() throws IOException {
 
         UUID gatheringId = UUID.fromString("51bf4f02-98af-471e-ab60-8fa3307dd6c2");
-        UUID creatorId = UUID.fromString("f77675b9-4eb9-4b8e-9462-4e8d6ebd08b1");
         String gatheringName = "Movie Night";
 
-        Gathering gathering = new Gathering(gatheringId, creatorId, gatheringName);
+        Gathering gathering = new Gathering(gatheringId, gatheringName);
 
         assertThat(json.write(gathering)).isStrictlyEqualToJson("expected.json");
         assertThat(json.write(gathering)).hasJsonPathStringValue("@.id");
         assertThat(json.write(gathering)).extractingJsonPathStringValue("@.id").isEqualTo("51bf4f02-98af-471e-ab60-8fa3307dd6c2");
-        assertThat(json.write(gathering)).hasJsonPathStringValue("@.creatorId");
-        assertThat(json.write(gathering)).extractingJsonPathStringValue("@.creatorId").isEqualTo("f77675b9-4eb9-4b8e-9462-4e8d6ebd08b1");
         assertThat(json.write(gathering)).hasJsonPathStringValue("@.gatheringName");
         assertThat(json.write(gathering)).extractingJsonPathStringValue("@.gatheringName").isEqualTo("Movie Night");
     }
@@ -40,20 +37,15 @@ public class GatheringScheduleJsonTest {
         String expected = """
                 {
                     "id" : "51bf4f02-98af-471e-ab60-8fa3307dd6c2",
-                    "creatorId" : "f77675b9-4eb9-4b8e-9462-4e8d6ebd08b1",
                     "gatheringName" : "Movie Night"
                 }
                 """;
 
         UUID gatheringId = UUID.fromString("51bf4f02-98af-471e-ab60-8fa3307dd6c2");
-        UUID creatorId = UUID.fromString("f77675b9-4eb9-4b8e-9462-4e8d6ebd08b1");
         String gatheringName = "Movie Night";
 
-        assertThat(json.parse(expected)).isEqualTo(new Gathering(gatheringId, creatorId, gatheringName));
-        assertThat(json.parseObject(expected).id()).isEqualTo(gatheringId);
-        assertThat(json.parseObject(expected).creatorId()).isEqualTo(creatorId);
-        assertThat(json.parseObject(expected).gatheringName()).isEqualTo(gatheringName);
+        assertThat(json.parse(expected)).isEqualTo(new Gathering(gatheringId, gatheringName));
+        assertThat(json.parseObject(expected).getId()).isEqualTo(gatheringId);
+        assertThat(json.parseObject(expected).getGatheringName()).isEqualTo(gatheringName);
     }
 }
-
-

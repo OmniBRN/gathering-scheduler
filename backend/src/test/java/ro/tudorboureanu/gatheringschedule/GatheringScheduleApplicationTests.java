@@ -1,6 +1,5 @@
 package ro.tudorboureanu.gatheringschedule;
 
-import com.fasterxml.jackson.core.JsonpCharacterEscapes;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
