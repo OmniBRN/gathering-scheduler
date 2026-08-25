@@ -1,4 +1,4 @@
-package ro.tudorboureanu.GatheringSchedule;
+package ro.tudorboureanu.gatheringschedule;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
