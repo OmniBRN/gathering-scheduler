@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 
+import ro.tudorboureanu.gatheringschedule.Gathering.Gathering;
+
 @JsonTest
 public class GatheringScheduleJsonTest {
     @Autowired

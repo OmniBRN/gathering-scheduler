@@ -1,4 +1,4 @@
-package ro.tudorboureanu.gatheringschedule;
+package ro.tudorboureanu.gatheringschedule.Gathering;
 
 import java.util.UUID;
 
@@ -16,7 +16,6 @@ public class Gathering {
 
     private String gatheringName;
 
-    /** Required by JPA. Not for application use. */
     protected Gathering() {
     }
 

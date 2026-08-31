@@ -1,4 +1,4 @@
-package ro.tudorboureanu.gatheringschedule;
+package ro.tudorboureanu.gatheringschedule.Gathering;
 
 import java.util.Optional;
 import java.util.UUID;
