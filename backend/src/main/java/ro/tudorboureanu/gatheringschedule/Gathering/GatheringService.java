@@ -4,7 +4,6 @@ package ro.tudorboureanu.gatheringschedule.Gathering;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,8 +33,7 @@ public class GatheringService {
     }
 
     public Optional<Gathering> deleteGathering(UUID id) {
-        Optional<Gathering> gathering = gatheringRepo.findById(id);
-        Optional<Gathering> res = gathering.map(g-> {gatheringRepo.delete(g); return g;});
+        Optional<Gathering> res = gatheringRepo.findById(id).map(g-> {gatheringRepo.delete(g); return g;});
         return res;
     }
 
