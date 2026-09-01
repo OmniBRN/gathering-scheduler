@@ -3,11 +3,11 @@ package ro.tudorboureanu.gatheringschedule.GatheringUser;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,6 +57,34 @@ public class GatheringUserController {
             )))
         .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PutMapping("{userId}/grantAdmin")
+    public ResponseEntity<GatheringUserResponseDTO> grantAdminToUser(@PathVariable UUID gatheringId, @PathVariable UUID userId) {
+        return gatheringUserService.grantAdminToUser(gatheringId, userId)
+        .map(g -> ResponseEntity.ok(
+            new GatheringUserResponseDTO(
+            g.getId().getGatheringId(),
+            g.getId().getId(),
+            g.isAdmin(),
+            g.getUsername()
+        )))
+        .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("{userId}/revokeAdmin")
+    public ResponseEntity<GatheringUserResponseDTO> revokeAdminOfUser(@PathVariable UUID gatheringId, @PathVariable UUID userId) {
+        return gatheringUserService.revokeAdminOfUser(gatheringId, userId)
+        .map(g -> ResponseEntity.ok(
+            new GatheringUserResponseDTO(
+            g.getId().getGatheringId(),
+            g.getId().getId(),
+            g.isAdmin(),
+            g.getUsername()
+        )))
+        .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
 
 
 
