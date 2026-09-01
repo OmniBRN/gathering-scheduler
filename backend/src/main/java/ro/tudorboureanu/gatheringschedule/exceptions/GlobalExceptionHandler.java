@@ -7,6 +7,8 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import ro.tudorboureanu.gatheringschedule.GatheringUser.exceptions.InvalidPinException;
+import ro.tudorboureanu.gatheringschedule.GatheringUser.exceptions.InvalidUsernameException;
 import ro.tudorboureanu.gatheringschedule.GatheringUser.exceptions.LastAdminException;
 
 @RestControllerAdvice
@@ -16,6 +18,21 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleLastAdmin(LastAdminException ex)  {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
         problem.setTitle("Cannot remove the last admin");
+        return problem;
+    }
+
+    @ExceptionHandler(InvalidPinException.class)
+    public ProblemDetail handleInvalidPin(InvalidPinException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problem.setTitle("Invalid Pin");
+        return problem;
+    } 
+
+    @ExceptionHandler(InvalidUsernameException.class)
+    public ProblemDetail handleInvalidUsername(InvalidUsernameException ex)
+    {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problem.setTitle("Invalid Name");
         return problem;
     }
 
