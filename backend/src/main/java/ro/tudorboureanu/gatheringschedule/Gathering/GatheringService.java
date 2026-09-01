@@ -6,16 +6,20 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import ro.tudorboureanu.gatheringschedule.GatheringUser.GatheringUserRepository;
+
 @Service
 public class GatheringService {
     private final GatheringRepository gatheringRepo;
-
-    public GatheringService(GatheringRepository gatheringRepo) {
+    private final GatheringUserRepository gatheringUserRepo;
+    public GatheringService(GatheringRepository gatheringRepo, GatheringUserRepository gatheringUserRepo) {
         this.gatheringRepo = gatheringRepo;
+        this.gatheringUserRepo = gatheringUserRepo;
     }
 
     public Gathering createGathering(String gatheringName) {
-        Gathering gathering = new Gathering(UUID.randomUUID(), gatheringName);
+        UUID gatheringId = UUID.randomUUID();
+        Gathering gathering = new Gathering(gatheringId, gatheringName);
         return gatheringRepo.save(gathering);
     }
 
