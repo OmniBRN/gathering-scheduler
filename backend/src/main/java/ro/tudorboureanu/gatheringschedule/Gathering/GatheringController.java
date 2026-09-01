@@ -22,17 +22,17 @@ public class GatheringController {
         this.gatheringService = gatheringService;
     }
 
+    @PostMapping("/")
+    private ResponseEntity<Gathering> createGathering(@RequestBody String gatheringName){
+        Gathering newGathering = gatheringService.createGathering(gatheringName);
+        return ResponseEntity.ok(newGathering);
+    }
+
     @GetMapping("/{requestId}")
     private ResponseEntity<Gathering> findById(@PathVariable UUID requestId) {
         return gatheringService.getGathering(requestId)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PostMapping("/")
-    private ResponseEntity<Gathering> createGathering(@RequestBody String gatheringName){
-        Gathering newGathering = gatheringService.createGathering(gatheringName);
-        return ResponseEntity.ok(newGathering);
     }
 
     @PutMapping("/{requestId}")
@@ -49,7 +49,6 @@ public class GatheringController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
-        
 
     }
 
