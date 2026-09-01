@@ -1,5 +1,7 @@
 package ro.tudorboureanu.gatheringschedule.GatheringUser;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,14 @@ public class GatheringUserService {
 
         GatheringUser newGatheringUser = new GatheringUser(userId, gatheringId, username, isAdmin, hashedPin);
         return gatheringUserRepo.save(newGatheringUser);
+    }
+
+    public List<GatheringUser> getAllUsersFromGathering(UUID gatheringId) {
+        return gatheringUserRepo.findByid_GatheringId(gatheringId);
+    }
+
+    public Optional<GatheringUser> getUserFromGathering(UUID gatheringId, UUID userId){
+        return gatheringUserRepo.findById(new GatheringUserId(gatheringId, userId));
     }
 
 }
