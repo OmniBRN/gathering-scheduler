@@ -44,7 +44,7 @@ public class GatheringUserController {
         }
 
 
-        GatheringUser newGatheringUser = gatheringUserService.createGatheringUser(gatheringId, request.username(), request.pin(), request.admin());
+        GatheringUser newGatheringUser = gatheringUserService.createGatheringUser(gatheringId, request.username(), request.pin());
         return ResponseEntity.ok(new GatheringUserResponseDTO(newGatheringUser.getId().getGatheringId(), newGatheringUser.getId().getId(), newGatheringUser.isAdmin(), newGatheringUser.getUsername()));
     }
 

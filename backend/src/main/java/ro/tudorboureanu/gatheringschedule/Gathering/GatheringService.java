@@ -4,22 +4,31 @@ package ro.tudorboureanu.gatheringschedule.Gathering;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ro.tudorboureanu.gatheringschedule.GatheringUser.GatheringUser;
 import ro.tudorboureanu.gatheringschedule.GatheringUser.GatheringUserRepository;
 
 @Service
 public class GatheringService {
     private final GatheringRepository gatheringRepo;
     private final GatheringUserRepository gatheringUserRepo;
-    public GatheringService(GatheringRepository gatheringRepo, GatheringUserRepository gatheringUserRepo) {
+    private final PasswordEncoder arg2pwencoder;
+    public GatheringService(GatheringRepository gatheringRepo, GatheringUserRepository gatheringUserRepo, PasswordEncoder arg2pwencoder) {
         this.gatheringRepo = gatheringRepo;
         this.gatheringUserRepo = gatheringUserRepo;
+        this.arg2pwencoder = arg2pwencoder;
     }
 
-    public Gathering createGathering(String gatheringName) {
+    public Gathering createGathering(String gatheringName, String gatheringCreatorUsername, String gatheringCreatorPin) {
         UUID gatheringId = UUID.randomUUID();
+        Boolean isAdmin = false;
+        String gatheringCreatorHashedPin = arg2pwencoder.encode(gatheringCreatorPin);
+
         Gathering gathering = new Gathering(gatheringId, gatheringName);
+        GatheringUser gatheringUser = new GatheringUser(UUID.randomUUID(), gatheringId, gatheringCreatorUsername, isAdmin, gatheringCreatorHashedPin);
+        gatheringUserRepo.save(gatheringUser);
         return gatheringRepo.save(gathering);
     }
 

@@ -20,11 +20,11 @@ public class GatheringUserService {
         this.arg2pwencoder = arg2pwencoder;
     }
 
-    public GatheringUser createGatheringUser(UUID gatheringId, String username, String pin, Boolean isAdmin){
+    public GatheringUser createGatheringUser(UUID gatheringId, String username, String pin){
         String hashedPin = arg2pwencoder.encode(pin);
 
         UUID userId = UUID.randomUUID();
-
+        Boolean isAdmin = false;
         GatheringUser newGatheringUser = new GatheringUser(userId, gatheringId, username, isAdmin, hashedPin);
         return gatheringUserRepo.save(newGatheringUser);
     }

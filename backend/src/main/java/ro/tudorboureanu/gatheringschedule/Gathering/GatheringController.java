@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ro.tudorboureanu.gatheringschedule.GatheringUser.DTOs.GatheringUserRequestDTO;
+
 
 @RestController
 @RequestMapping("/api/gathering")
@@ -24,8 +26,8 @@ public class GatheringController {
     }
 
     @PostMapping("/")
-    private ResponseEntity<Gathering> createGathering(@RequestBody String gatheringName){
-        Gathering newGathering = gatheringService.createGathering(gatheringName);
+    private ResponseEntity<Gathering> createGathering(@RequestBody String gatheringName, @RequestBody GatheringUserRequestDTO gatheringUser){
+        Gathering newGathering = gatheringService.createGathering(gatheringName, gatheringUser.username(), gatheringUser.pin());
         return ResponseEntity.ok(newGathering);
     }
 
