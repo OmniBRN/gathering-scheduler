@@ -7,6 +7,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import ro.tudorboureanu.gatheringschedule.Gathering.exceptions.InvalidGatheringNameException;
 import ro.tudorboureanu.gatheringschedule.GatheringUser.exceptions.InvalidPinException;
 import ro.tudorboureanu.gatheringschedule.GatheringUser.exceptions.InvalidUsernameException;
 import ro.tudorboureanu.gatheringschedule.GatheringUser.exceptions.LastAdminException;
@@ -32,7 +33,15 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleInvalidUsername(InvalidUsernameException ex)
     {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
-        problem.setTitle("Invalid Name");
+        problem.setTitle("Invalid Username");
+        return problem;
+    }
+
+    @ExceptionHandler(InvalidGatheringNameException.class)
+    public ProblemDetail handleInvalidGatheringName(InvalidGatheringNameException ex)
+    {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problem.setTitle("Invalid Gathering Name");
         return problem;
     }
 
@@ -40,7 +49,7 @@ public class GlobalExceptionHandler {
     public ProblemDetail fallBack(Exception ex) {
         ProblemDetail problem = ProblemDetail.forStatus(500);
         log.error("Unhandled Exception", ex);
-        problem.setTitle("Problem?");
+        problem.setTitle("Unhandled Exception");
         return problem;
     }
 

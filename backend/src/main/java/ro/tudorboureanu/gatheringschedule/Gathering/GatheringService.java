@@ -23,13 +23,16 @@ public class GatheringService {
 
     public Gathering createGathering(String gatheringName, String gatheringCreatorUsername, String gatheringCreatorPin) {
         UUID gatheringId = UUID.randomUUID();
-        Boolean isAdmin = false;
+        Boolean isAdmin = true;
         String gatheringCreatorHashedPin = arg2pwencoder.encode(gatheringCreatorPin);
 
         Gathering gathering = new Gathering(gatheringId, gatheringName);
+        gatheringRepo.save(gathering);
+
         GatheringUser gatheringUser = new GatheringUser(UUID.randomUUID(), gatheringId, gatheringCreatorUsername, isAdmin, gatheringCreatorHashedPin);
         gatheringUserRepo.save(gatheringUser);
-        return gatheringRepo.save(gathering);
+
+        return gathering;
     }
 
     public Optional<Gathering> getGathering(UUID id) {
