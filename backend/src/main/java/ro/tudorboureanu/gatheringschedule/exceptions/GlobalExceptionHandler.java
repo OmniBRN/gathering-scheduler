@@ -11,6 +11,8 @@ import ro.tudorboureanu.gatheringschedule.Gathering.exceptions.InvalidGatheringN
 import ro.tudorboureanu.gatheringschedule.GatheringUser.exceptions.InvalidPinException;
 import ro.tudorboureanu.gatheringschedule.GatheringUser.exceptions.InvalidUsernameException;
 import ro.tudorboureanu.gatheringschedule.GatheringUser.exceptions.LastAdminException;
+import ro.tudorboureanu.gatheringschedule.TimeAndLocation.exceptions.InvalidLocationException;
+import ro.tudorboureanu.gatheringschedule.TimeAndLocation.exceptions.InvalidTimeException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -42,6 +44,20 @@ public class GlobalExceptionHandler {
     {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
         problem.setTitle("Invalid Gathering Name");
+        return problem;
+    }
+    
+    @ExceptionHandler(InvalidTimeException.class)
+    public ProblemDetail handleInvalidLocationTime(InvalidTimeException ex){
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problem.setTitle("Invalid Location Time");
+        return problem;
+    }
+
+    @ExceptionHandler(InvalidLocationException.class)
+    public ProblemDetail handleInvalidLocationException(InvalidLocationException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problem.setTitle("Invalid Coordinates");
         return problem;
     }
 
