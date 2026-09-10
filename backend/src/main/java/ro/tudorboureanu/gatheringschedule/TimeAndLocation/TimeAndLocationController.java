@@ -2,10 +2,8 @@ package ro.tudorboureanu.gatheringschedule.TimeAndLocation;
 
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestClient.ResponseSpec;
 
 import ro.tudorboureanu.gatheringschedule.Gathering.GatheringService;
 import ro.tudorboureanu.gatheringschedule.GatheringUser.GatheringUserService;
@@ -70,7 +67,7 @@ public class TimeAndLocationController {
        
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<List<TimeAndLocation>> getAllTAL(@PathVariable UUID gatheringId){
         return ResponseEntity.ok(timeAndLocationService.getAllTAL(gatheringId));
     }
